@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000"
+const API_URL = "https://rag-app-dtsi.onrender.com"
 
 export interface UploadResponse {
   id: string
