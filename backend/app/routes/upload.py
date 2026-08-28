@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile
-from app.services.ingestion import file_ingestion
+from backend.app.services.ingestion import file_ingestion
 
 router =APIRouter()
 @router.post("/upload_file")

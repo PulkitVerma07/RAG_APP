@@ -1,7 +1,7 @@
 import requests
 from dotenv import load_dotenv
 load_dotenv()
-from app.core.config import LLm
+from backend.app.core.config import LLm
 
 
 def llm_processing(question , retreived_text):
@@ -17,4 +17,7 @@ def llm_processing(question , retreived_text):
     url,headers = LLm()
     request = requests.post(url=url,headers=headers,json=payload)
     request.raise_for_status()
-    return request.json()
+    data =request.json()
+    answer = data["candidates"][0]["content"]["parts"][0]["text"]
+
+    return answer

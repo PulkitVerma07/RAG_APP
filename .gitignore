@@ -6,6 +6,7 @@ env/
 # Environment variables / secrets
 .env
 .env.*
+!.env.example
 
 # Python cache
 __pycache__/
@@ -41,3 +42,15 @@ uploads/
 # OS files
 .DS_Store
 Thumbs.db
+
+
+
+
+.venv/
+__pycache__/
+*.pyc
+
+node_modules/
+.next/
+
+vector_db/

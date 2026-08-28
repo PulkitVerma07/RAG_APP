@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from app.routes.user_question import router as question_ask
+from backend.app.routes.user_question import router as question_ask
 
-from app.routes.upload import router as upload
+from backend.app.routes.upload import router as upload
 from fastapi.middleware.cors import CORSMiddleware
 
 app =FastAPI()
