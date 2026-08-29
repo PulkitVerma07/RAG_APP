@@ -1,7 +1,7 @@
 from PyPDF2 import PdfReader
 import io
 import random 
-from backend.app.core.config import embedding_model,VectroDb
+from backend.app.core.config import get_embedding,VectroDb
 
 def file_ingestion(file_bytes,file_name):
     reader = PdfReader(io.BytesIO(file_bytes))
@@ -18,9 +18,9 @@ def file_ingestion(file_bytes,file_name):
         chunks.append("".join(chunk))
         if i+chunk_Size >= len(text_list):
             break
-    model = embedding_model()
+    model = get_embedding()
     collection = VectroDb()
-    embeddings = model.encode(chunks)
+    embeddings = [e.tolist() for e in model.embed(chunks)]
     document_id = f'{file_name}'+str(random.randint(11111,99999))
     collection.add(
         ids=[f'{file_name}_{i}' for i in range(len(chunks)) ],

@@ -1,14 +1,14 @@
-from backend.app.core.config import embedding_model, VectroDb
+from backend.app.core.config import get_embedding, VectroDb
 
 
 def retreiving_question(question):
-    model = embedding_model()
+    model = get_embedding()
     collection = VectroDb()
-
+    question_embedding = list(model.embed([question]))[0].tolist()
     question_embedding = model.encode(question)
 
     results = collection.query(
-        query_embeddings=[question_embedding.tolist()],
+        query_embeddings=[question_embedding],
         n_results=10,
         include=["documents", "metadatas", "distances"],
     )
