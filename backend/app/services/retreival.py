@@ -5,7 +5,6 @@ def retreiving_question(question):
     model = get_embedding()
     collection = VectroDb()
     question_embedding = list(model.embed([question]))[0].tolist()
-    question_embedding = model.encode(question)
 
     results = collection.query(
         query_embeddings=[question_embedding],
