@@ -38,7 +38,7 @@ function pick<T>(arr: T[], n: number): T[] {
   return out
 }
 
-/** Simulates a RAG answer + retrieved sources for a given question. */
+
 export function generateMockResult(
   question: string,
   documents: RagDocument[],

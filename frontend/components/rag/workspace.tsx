@@ -16,7 +16,7 @@ import type {
 
 import {
   uploadDocument,
-  askQuestionStream, // <--- Update this line
+  askQuestionStream, 
 } from '@/lib/api'
 
 
@@ -125,9 +125,7 @@ export function Workspace() {
  
 
 
-  // =========================
-  // REMOVE DOCUMENT
-  // =========================
+  
 
   const handleRemove = useCallback(
     (id: string) => {

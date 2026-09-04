@@ -1,6 +1,6 @@
 import type { RetrievedSource } from './types'
 
-const API_URL = "http://127.0.0.1:8000" // Use your Render URL in production
+const API_URL = "https://rag-app-dtsi.onrender.com" 
 
 export interface UploadResponse {
   id: string
@@ -63,7 +63,7 @@ export async function askQuestionStream(
             onToken(payload.data)
           }
         } catch {
-          // Ignore incomplete chunk reads
+          
         }
       }
     }

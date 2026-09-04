@@ -7,7 +7,7 @@ export interface RagDocument {
   pages: number
   chunks: number
   status: DocumentStatus
-  progress: number // 0 - 100, used during uploading / processing
+  progress: number
   addedAt: number
   errorMessage?: string
 }
@@ -18,7 +18,7 @@ export interface RetrievedSource {
   documentName: string
   page: number
   chunk: string
-  score: number // 0 - 1 relevance
+  score: number
 }
 
 export type QueryPhase =
