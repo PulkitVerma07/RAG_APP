@@ -16,7 +16,7 @@ import type {
 
 import {
   uploadDocument,
-  askQuestion,
+  askQuestionStream, // <--- Update this line
 } from '@/lib/api'
 
 
@@ -122,6 +122,7 @@ export function Workspace() {
     },
     []
   )
+ 
 
 
   // =========================
@@ -144,40 +145,37 @@ export function Workspace() {
 
 
   // =========================
-  // ASK QUESTION
+  // ASK QUESTION (STREAMING)
   // =========================
-
   const runQuery = useCallback(
     async (question: string) => {
-
       lastQuestion.current = question
-
-      setResult(null)
       setError(null)
       setPhase('retrieving')
 
+      setResult({
+        question,
+        answer: '',
+        sources: [],
+      })
+
       try {
-
-        const response =
-          await askQuestion(question)
-
-        setPhase('generating')
-
-        setResult({
-          question: response.question,
-          answer: response.answer,
-          sources: response.sources,
-        })
-
+        await askQuestionStream(
+          question,
+          (sources) => {
+            setPhase('generating')
+            setResult((prev) => (prev ? { ...prev, sources } : null))
+          },
+          (token) => {
+            setPhase('generating')
+            setResult((prev) =>
+              prev ? { ...prev, answer: prev.answer + token } : null
+            )
+          }
+        )
         setPhase('complete')
-
       } catch (err) {
-
-        const message =
-          err instanceof Error
-            ? err.message
-            : 'Something went wrong'
-
+        const message = err instanceof Error ? err.message : 'Something went wrong'
         setError(message)
         setPhase('error')
       }
@@ -185,32 +183,19 @@ export function Workspace() {
     []
   )
 
-
   // =========================
   // RETRY
   // =========================
-
-  const handleRetry = useCallback(
-    () => {
-
-      if (lastQuestion.current) {
-        runQuery(lastQuestion.current)
-      }
-
-    },
-    [runQuery]
-  )
+  const handleRetry = useCallback(() => {
+    if (lastQuestion.current) {
+      runQuery(lastQuestion.current)
+    }
+  }, [runQuery])
 
 
-  const readyCount =
-    documents.filter(
-      (doc) => doc.status === 'ready'
-    ).length
+  const readyCount = documents.filter((doc) => doc.status === 'ready').length
 
-
-  // =========================
-  // UI
-  // =========================
+  
 
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-background text-foreground">

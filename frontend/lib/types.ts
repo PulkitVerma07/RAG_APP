@@ -14,7 +14,7 @@ export interface RagDocument {
 
 export interface RetrievedSource {
   id: string
-  documentId: string
+  documentId?: string
   documentName: string
   page: number
   chunk: string
